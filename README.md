@@ -1,4 +1,5 @@
-# Xiaomi Gaming Mouse Lite
+# Xiaomi Gaming Mouse Lite  
+Shenanigans and Soft Reverse Engineering  
 
 ## Specifications  
 Chip: Holtek HT32F5XXXX  
@@ -8,7 +9,7 @@ Boot ROM: 4 KB `0x1FF00000`
 Sensor: PixArt PAW3327
 
 ## Toolkit  
-Download: https://github.com/thebadinteger/xiaomi-gaming-mouse-lite/blob/main/toolkit.py
+Download: https://github.com/thebadinteger/xiaomi-gaming-mouse-lite/blob/main/toolkit.py  
 Setup: `pip install hidapi`  
 Start: `python toolkit.py`  
 (Requires hidapi package and root privileges on Linux)  
@@ -58,7 +59,7 @@ I think the only way around this is through physical modification and voltage ma
 
 After we changed the driver to `WinUSB`, we fuzzed the bootloader's verification command (`CMD 1, SUB 0`). While direct reading was blocked by the hardware, we attempted a "Direct Comparison Oracle" attack (brute-forcing 1 byte at a time and reading the hardware verify response). However, we discovered that the bootloader requires aligned 52-byte chunks and blocks all verification commands when `Flash Security` is active, preventing side-channel leaks.  
 
-#### Conclusion  
+### Conclusion  
 - The Xiaomi Gaming Mouse Lite (YXSB01YM) has no over-USB color configuration handlers compiled into its AP firmware. 
 - The ROM bootloader is completely secured against USB readout attacks, making the original firmware safe from extraction. 
 - Custom color is exclusively handled by local hardware interrupts (FN button combos). This can only be fixed by rewriting the firmware from scratch and mass-erasing the factory one.
